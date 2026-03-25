@@ -36,6 +36,18 @@ func (r *Rover) ExecuteNextCommand() bool {
 		}
 	}
 
+	if string(r.instructions[r.currentInstruction]) == "R" {
+		if r.direction == "N" {
+			r.direction = "E"
+		} else if r.direction == "E" {
+			r.direction = "S"
+		} else if r.direction == "S" {
+			r.direction = "W"
+		} else if r.direction == "W" {
+			r.direction = "N"
+		}
+	}
+
 	r.currentInstruction++
 	return true
 }

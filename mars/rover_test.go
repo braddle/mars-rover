@@ -54,6 +54,38 @@ func TestRoverCanRotateLeftFourTimes(t *testing.T) {
 	assert.Equal(t, "1 1 N", r.ReportLastPosition())
 }
 
+func TestRoverCanRotateRightOnce(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "N", "R")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 1 E", r.ReportLastPosition())
+}
+
+func TestRoverCanRotateRightTwice(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "N", "RR")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 1 S", r.ReportLastPosition())
+}
+
+func TestRoverCanRotateRightThreeTimes(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "N", "RRR")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 1 W", r.ReportLastPosition())
+}
+
+func TestRoverCanRotateLRightFourTimes(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "N", "RRRR")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 1 N", r.ReportLastPosition())
+}
+
 func executeAllRoverCommands(r *mars.Rover) {
 	for {
 		ok := r.ExecuteNextCommand()
