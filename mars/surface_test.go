@@ -82,10 +82,18 @@ func TestRunningWithRoverWithNoInstructionsDoesNotMove(t *testing.T) {
 	err := s.LandRover(mockLandableItem)
 	assert.NoError(t, err)
 
-	out := s.Run()
+	out, err := s.Run()
 
+	assert.NoError(t, err)
 	assert.Equal(t, "1 1 N", out)
+}
 
+func TestRunningFailsIfNoRoversOnSurface(t *testing.T) {
+	s, _ := mars.NewSurface(2, 2)
+
+	_, err := s.Run()
+
+	assert.ErrorContains(t, err, "No rovers on the surface")
 }
 
 type MockLandableItem struct {
