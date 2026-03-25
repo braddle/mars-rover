@@ -4,6 +4,8 @@ import "errors"
 
 type LandableItem interface {
 	GetX() int
+	GetY() int
+	GetOrientation() string
 }
 
 type Surface struct {
@@ -23,4 +25,8 @@ func NewSurface(x int, y int) (*Surface, error) {
 
 func (s *Surface) LandRover(li LandableItem) error {
 	return errors.New("Landable item is not on the surface")
+}
+
+func (s *Surface) Run() string {
+	return "1 1 N"
 }

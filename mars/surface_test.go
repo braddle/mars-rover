@@ -41,6 +41,21 @@ func TestRoverCannotBePlaceOffTheBottomOfTheSurface(t *testing.T) {
 	assert.ErrorContains(t, err, "Landable item is not on the surface")
 }
 
+func TestRunningWithRoverWithNoInstructionsDoesNotMove(t *testing.T) {
+	mockLandableItem := new(MockLandableItem)
+	mockLandableItem.On("GetX").Return(1)
+	mockLandableItem.On("GetY").Return(1)
+	mockLandableItem.On("GetOrientation").Return("N")
+	s, _ := mars.NewSurface(2, 2)
+
+	s.LandRover(mockLandableItem)
+
+	out := s.Run()
+
+	assert.Equal(t, "1 1 N", out)
+
+}
+
 type MockLandableItem struct {
 	mock.Mock
 }
@@ -48,4 +63,14 @@ type MockLandableItem struct {
 func (m *MockLandableItem) GetX() int {
 	args := m.Called()
 	return args.Int(0)
+}
+
+func (m *MockLandableItem) GetY() int {
+	args := m.Called()
+	return args.Int(0)
+}
+
+func (m *MockLandableItem) GetOrientation() string {
+	args := m.Called()
+	return args.String(0)
 }
