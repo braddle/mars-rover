@@ -118,6 +118,14 @@ func TestRoverCanMoveWest(t *testing.T) {
 	assert.Equal(t, "0 1 W", r.ReportLastPosition())
 }
 
+func TestIfRoverDontNotCompleteAllInstructionsItIsLost(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "W", "FF")
+	assert.NoError(t, err)
+
+	r.ExecuteNextCommand()
+	assert.Equal(t, "0 1 W LOST", r.ReportLastPosition())
+}
+
 func executeAllRoverCommands(r *mars.Rover) {
 	for {
 		ok := r.ExecuteNextCommand()

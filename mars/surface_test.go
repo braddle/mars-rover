@@ -97,8 +97,21 @@ func TestRunningFailsIfNoRoversOnSurface(t *testing.T) {
 	assert.ErrorContains(t, err, "No rovers on the surface")
 }
 
+func TestRealRoverCanRun(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+	r, _ := mars.NewRover(2, 2, "N", "FLF")
+
+	s.LandRover(r)
+	out, _ := s.Run()
+	assert.Equal(t, "1 3 W", out)
+}
+
 type MockLandableItem struct {
 	mock.Mock
+}
+
+func (m *MockLandableItem) ExecuteNextCommand() bool {
+	return false
 }
 
 func (m *MockLandableItem) GetX() int {

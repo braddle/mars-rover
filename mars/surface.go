@@ -6,6 +6,7 @@ type LandableItem interface {
 	GetX() int
 	GetY() int
 	ReportLastPosition() string
+	ExecuteNextCommand() bool
 }
 
 type Surface struct {
@@ -42,6 +43,13 @@ func (s *Surface) LandRover(li LandableItem) error {
 func (s *Surface) Run() (string, error) {
 	if len(s.rovers) == 0 {
 		return "", errors.New("No rovers on the surface")
+	}
+
+	for {
+		ok := s.rovers[0].ExecuteNextCommand()
+		if !ok {
+			break
+		}
 	}
 
 	return s.rovers[0].ReportLastPosition(), nil

@@ -29,6 +29,14 @@ func NewRover(x int, y int, direction string, instructions string) (*Rover, erro
 	return &Rover{x: x, y: y, instructions: instructions, direction: direction}, nil
 }
 
+func (r *Rover) GetX() int {
+	return r.x
+}
+
+func (r *Rover) GetY() int {
+	return r.y
+}
+
 func (r *Rover) ExecuteNextCommand() bool {
 	if len(r.instructions) == 0 || r.currentInstruction >= len(r.instructions) {
 		return false
@@ -75,5 +83,10 @@ func (r *Rover) ExecuteNextCommand() bool {
 }
 
 func (r *Rover) ReportLastPosition() string {
-	return fmt.Sprintf("%d %d %s", r.x, r.y, r.direction)
+	status := ""
+	if r.currentInstruction < len(r.instructions) {
+		status = " LOST"
+	}
+
+	return fmt.Sprintf("%d %d %s%s", r.x, r.y, r.direction, status)
 }
