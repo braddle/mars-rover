@@ -106,6 +106,23 @@ func TestRealRoverCanRun(t *testing.T) {
 	assert.Equal(t, "1 3 W", out)
 }
 
+func TestMultipleRealRoversCanRun(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+
+	r, _ := mars.NewRover(2, 2, "N", "FF")
+	s.LandRover(r)
+	r, _ = mars.NewRover(2, 2, "E", "FF")
+	s.LandRover(r)
+	r, _ = mars.NewRover(2, 2, "S", "FF")
+	s.LandRover(r)
+	r, _ = mars.NewRover(2, 2, "W", "FF")
+	s.LandRover(r)
+
+	out, _ := s.Run()
+	exp := "2 4 N\n4 2 E\n2 0 S\n0 2 W"
+	assert.Equal(t, exp, out)
+}
+
 type MockLandableItem struct {
 	mock.Mock
 }

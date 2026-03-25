@@ -1,6 +1,9 @@
 package mars
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 type LandableItem interface {
 	GetX() int
@@ -45,12 +48,17 @@ func (s *Surface) Run() (string, error) {
 		return "", errors.New("No rovers on the surface")
 	}
 
-	for {
-		ok := s.rovers[0].ExecuteNextCommand()
-		if !ok {
-			break
+	finalPositions := make([]string, len(s.rovers))
+	for i, r := range s.rovers {
+		for {
+			ok := r.ExecuteNextCommand()
+			if !ok {
+				break
+			}
 		}
+
+		finalPositions[i] = r.ReportLastPosition()
 	}
 
-	return s.rovers[0].ReportLastPosition(), nil
+	return strings.Join(finalPositions, "\n"), nil
 }
