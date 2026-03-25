@@ -1,8 +1,14 @@
 package mars
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Rover struct {
+	instructions       string
+	direction          string
+	currentInstruction int
 }
 
 func NewRover(x int, y int, direction string, instructions string) (*Rover, error) {
@@ -10,12 +16,30 @@ func NewRover(x int, y int, direction string, instructions string) (*Rover, erro
 		return nil, errors.New("Rover has more than 100 instructions")
 	}
 
-	return &Rover{}, nil
+	return &Rover{instructions: instructions, direction: direction}, nil
 }
 
-func (r *Rover) ExecuteNextCommand() {
+func (r *Rover) ExecuteNextCommand() bool {
+	if len(r.instructions) == 0 || r.currentInstruction >= len(r.instructions) {
+		return false
+	}
+
+	if string(r.instructions[r.currentInstruction]) == "L" {
+		if r.direction == "N" {
+			r.direction = "W"
+		} else if r.direction == "W" {
+			r.direction = "S"
+		} else if r.direction == "S" {
+			r.direction = "E"
+		} else if r.direction == "E" {
+			r.direction = "N"
+		}
+	}
+
+	r.currentInstruction++
+	return true
 }
 
 func (r *Rover) ReportLastPosition() string {
-	return "1 1 N"
+	return fmt.Sprintf("1 1 %s", r.direction)
 }
