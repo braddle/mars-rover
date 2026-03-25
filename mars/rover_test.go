@@ -86,6 +86,38 @@ func TestRoverCanRotateLRightFourTimes(t *testing.T) {
 	assert.Equal(t, "1 1 N", r.ReportLastPosition())
 }
 
+func TestRoverCanMoveNorth(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "N", "F")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 2 N", r.ReportLastPosition())
+}
+
+func TestRoverCanMoveEast(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "E", "F")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "2 1 E", r.ReportLastPosition())
+}
+
+func TestRoverCanMoveSouth(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "S", "F")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 0 S", r.ReportLastPosition())
+}
+
+func TestRoverCanMoveWest(t *testing.T) {
+	r, err := mars.NewRover(1, 1, "W", "F")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "0 1 W", r.ReportLastPosition())
+}
+
 func executeAllRoverCommands(r *mars.Rover) {
 	for {
 		ok := r.ExecuteNextCommand()

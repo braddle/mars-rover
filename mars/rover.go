@@ -6,6 +6,8 @@ import (
 )
 
 type Rover struct {
+	y                  int
+	x                  int
 	instructions       string
 	direction          string
 	currentInstruction int
@@ -24,7 +26,7 @@ func NewRover(x int, y int, direction string, instructions string) (*Rover, erro
 		return nil, errors.New("Rover has more than 100 instructions")
 	}
 
-	return &Rover{instructions: instructions, direction: direction}, nil
+	return &Rover{x: x, y: y, instructions: instructions, direction: direction}, nil
 }
 
 func (r *Rover) ExecuteNextCommand() bool {
@@ -56,10 +58,22 @@ func (r *Rover) ExecuteNextCommand() bool {
 		}
 	}
 
+	if string(r.instructions[r.currentInstruction]) == "F" {
+		if r.direction == north {
+			r.y = r.y + 1
+		} else if r.direction == east {
+			r.x = r.x + 1
+		} else if r.direction == south {
+			r.y = r.y - 1
+		} else if r.direction == west {
+			r.x = r.x - 1
+		}
+	}
+
 	r.currentInstruction++
 	return true
 }
 
 func (r *Rover) ReportLastPosition() string {
-	return fmt.Sprintf("1 1 %s", r.direction)
+	return fmt.Sprintf("%d %d %s", r.x, r.y, r.direction)
 }
