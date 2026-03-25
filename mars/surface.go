@@ -24,7 +24,11 @@ func NewSurface(x int, y int) (*Surface, error) {
 }
 
 func (s *Surface) LandRover(li LandableItem) error {
-	return errors.New("Landable item is not on the surface")
+	if li.GetX() < 0 {
+		return errors.New("Landable item is not on the surface")
+	}
+
+	return nil
 }
 
 func (s *Surface) Run() string {

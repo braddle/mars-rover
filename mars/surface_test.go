@@ -48,7 +48,8 @@ func TestRunningWithRoverWithNoInstructionsDoesNotMove(t *testing.T) {
 	mockLandableItem.On("GetOrientation").Return("N")
 	s, _ := mars.NewSurface(2, 2)
 
-	s.LandRover(mockLandableItem)
+	err := s.LandRover(mockLandableItem)
+	assert.NoError(t, err)
 
 	out := s.Run()
 
