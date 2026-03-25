@@ -18,3 +18,9 @@ func TestSurfaceYCordMustBeInRange(t *testing.T) {
 
 	assert.ErrorContains(t, err, "Y cord out of range")
 }
+
+func TestXCordMustBePositiveNumber(t *testing.T) {
+	_, err := mars.NewSurface(-1, 10)
+
+	assert.ErrorContains(t, err, "X cord out of range")
+}
