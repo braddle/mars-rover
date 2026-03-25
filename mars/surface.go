@@ -5,7 +5,7 @@ import "errors"
 type LandableItem interface {
 	GetX() int
 	GetY() int
-	GetOrientation() string
+	ReportLastPosition() string
 }
 
 type Surface struct {
@@ -44,5 +44,5 @@ func (s *Surface) Run() (string, error) {
 		return "", errors.New("No rovers on the surface")
 	}
 
-	return "1 1 N", nil
+	return s.rovers[0].ReportLastPosition(), nil
 }

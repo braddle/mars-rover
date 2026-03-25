@@ -76,7 +76,8 @@ func TestRunningWithRoverWithNoInstructionsDoesNotMove(t *testing.T) {
 	mockLandableItem := new(MockLandableItem)
 	mockLandableItem.On("GetX").Return(1)
 	mockLandableItem.On("GetY").Return(1)
-	mockLandableItem.On("GetOrientation").Return("N")
+	mockLandableItem.On("ReportLastPosition").Return("1 1 N")
+
 	s, _ := mars.NewSurface(2, 2)
 
 	err := s.LandRover(mockLandableItem)
@@ -110,7 +111,7 @@ func (m *MockLandableItem) GetY() int {
 	return args.Int(0)
 }
 
-func (m *MockLandableItem) GetOrientation() string {
+func (m *MockLandableItem) ReportLastPosition() string {
 	args := m.Called()
 	return args.String(0)
 }
