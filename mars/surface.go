@@ -10,6 +10,7 @@ type LandableItem interface {
 
 type Surface struct {
 	x int
+	y int
 }
 
 func NewSurface(x int, y int) (*Surface, error) {
@@ -21,11 +22,11 @@ func NewSurface(x int, y int) (*Surface, error) {
 		return nil, errors.New("Y cord out of range")
 	}
 
-	return &Surface{x}, nil
+	return &Surface{x, y}, nil
 }
 
 func (s *Surface) LandRover(li LandableItem) error {
-	if li.GetX() < 0 || li.GetX() > s.x {
+	if li.GetX() < 0 || li.GetX() > s.x || li.GetY() > s.y {
 		return errors.New("Landable item is not on the surface")
 	}
 
