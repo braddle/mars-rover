@@ -61,6 +61,17 @@ func TestRoverCannotBePlaceOffTheRightOfTheSurface(t *testing.T) {
 	assert.ErrorContains(t, err, "Landable item is not on the surface")
 }
 
+func TestRoverCannotBePlaceOffTheLeftOfTheSurface(t *testing.T) {
+	mockLandableItem := new(MockLandableItem)
+	mockLandableItem.On("GetX").Return(1)
+	mockLandableItem.On("GetY").Return(-1)
+
+	s, _ := mars.NewSurface(3, 3)
+	err := s.LandRover(mockLandableItem)
+
+	assert.ErrorContains(t, err, "Landable item is not on the surface")
+}
+
 func TestRunningWithRoverWithNoInstructionsDoesNotMove(t *testing.T) {
 	mockLandableItem := new(MockLandableItem)
 	mockLandableItem.On("GetX").Return(1)
