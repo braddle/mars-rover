@@ -9,6 +9,7 @@ type LandableItem interface {
 	GetX() int
 	GetY() int
 	ReportLastPosition() string
+	GetNextExpectedPosition() Position
 	ExecuteNextCommand() bool
 }
 
@@ -51,6 +52,10 @@ func (s *Surface) Run() (string, error) {
 	finalPositions := make([]string, len(s.rovers))
 	for i, r := range s.rovers {
 		for {
+			nextPosition := r.GetNextExpectedPosition()
+			if nextPosition.Y > s.y || nextPosition.X > s.x || nextPosition.Y < 0 || nextPosition.X < 0 {
+				break
+			}
 			ok := r.ExecuteNextCommand()
 			if !ok {
 				break

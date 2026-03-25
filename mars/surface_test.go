@@ -123,12 +123,52 @@ func TestMultipleRealRoversCanRun(t *testing.T) {
 	assert.Equal(t, exp, out)
 }
 
+func TestRoverRunningNorthOffTheSurface(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+	r, _ := mars.NewRover(2, 2, "N", "FFFFF")
+
+	s.LandRover(r)
+	out, _ := s.Run()
+	assert.Equal(t, "2 5 N LOST", out)
+}
+
+func TestRoverRunningEastOffTheSurface(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+	r, _ := mars.NewRover(2, 2, "E", "FFFFF")
+
+	s.LandRover(r)
+	out, _ := s.Run()
+	assert.Equal(t, "5 2 E LOST", out)
+}
+
+func TestRoverRunningSouthOffTheSurface(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+	r, _ := mars.NewRover(2, 2, "S", "FFFFF")
+
+	s.LandRover(r)
+	out, _ := s.Run()
+	assert.Equal(t, "2 0 S LOST", out)
+}
+
+func TestRoverRunningWestOffTheSurface(t *testing.T) {
+	s, _ := mars.NewSurface(5, 5)
+	r, _ := mars.NewRover(2, 2, "W", "FFFFF")
+
+	s.LandRover(r)
+	out, _ := s.Run()
+	assert.Equal(t, "0 2 W LOST", out)
+}
+
 type MockLandableItem struct {
 	mock.Mock
 }
 
 func (m *MockLandableItem) ExecuteNextCommand() bool {
 	return false
+}
+
+func (m *MockLandableItem) GetNextExpectedPosition() mars.Position {
+	return mars.Position{0, 0}
 }
 
 func (m *MockLandableItem) GetX() int {

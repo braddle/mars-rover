@@ -126,6 +126,13 @@ func TestIfRoverDontNotCompleteAllInstructionsItIsLost(t *testing.T) {
 	assert.Equal(t, "0 1 W LOST", r.ReportLastPosition())
 }
 
+func TestGetNextExpectedPositionIdempotent(t *testing.T) {
+	r, _ := mars.NewRover(1, 1, "W", "FF")
+	assert.Equal(t, mars.Position{0, 1}, r.GetNextExpectedPosition())
+	assert.Equal(t, mars.Position{0, 1}, r.GetNextExpectedPosition())
+	assert.Equal(t, mars.Position{0, 1}, r.GetNextExpectedPosition())
+}
+
 func executeAllRoverCommands(r *mars.Rover) {
 	for {
 		ok := r.ExecuteNextCommand()

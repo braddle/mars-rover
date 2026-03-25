@@ -82,6 +82,26 @@ func (r *Rover) ExecuteNextCommand() bool {
 	return true
 }
 
+func (r *Rover) GetNextExpectedPosition() Position {
+	if len(r.instructions) == 0 || r.currentInstruction >= len(r.instructions) {
+		return Position{r.x, r.y}
+	}
+
+	if string(r.instructions[r.currentInstruction]) == "F" {
+		if r.direction == north {
+			return Position{r.x, r.y + 1}
+		} else if r.direction == east {
+			return Position{r.x + 1, r.y}
+		} else if r.direction == south {
+			return Position{r.x, r.y - 1}
+		} else if r.direction == west {
+			return Position{r.x - 1, r.y}
+		}
+	}
+
+	return Position{r.x, r.y}
+}
+
 func (r *Rover) ReportLastPosition() string {
 	status := ""
 	if r.currentInstruction < len(r.instructions) {
