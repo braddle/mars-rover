@@ -16,65 +16,49 @@ func TestRoverCannotHaveMoreThat100Instructions(t *testing.T) {
 
 func TestRoverReportInitalPositionIfItHasNoInstructions(t *testing.T) {
 	r, err := mars.NewRover(1, 1, "N", "")
-	for {
-		ok := r.ExecuteNextCommand()
-		if !ok {
-			break
-		}
-	}
-
 	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
 	assert.Equal(t, "1 1 N", r.ReportLastPosition())
 }
 
 func TestRoverCanRotateLeftOnce(t *testing.T) {
 	r, err := mars.NewRover(1, 1, "N", "L")
-	for {
-		ok := r.ExecuteNextCommand()
-		if !ok {
-			break
-		}
-	}
-
 	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
 	assert.Equal(t, "1 1 W", r.ReportLastPosition())
 }
 
 func TestRoverCanRotateLeftTwice(t *testing.T) {
 	r, err := mars.NewRover(1, 1, "N", "LL")
-	for {
-		ok := r.ExecuteNextCommand()
-		if !ok {
-			break
-		}
-	}
-
 	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
 	assert.Equal(t, "1 1 S", r.ReportLastPosition())
 }
 
 func TestRoverCanRotateLeftThreeTimes(t *testing.T) {
 	r, err := mars.NewRover(1, 1, "N", "LLL")
-	for {
-		ok := r.ExecuteNextCommand()
-		if !ok {
-			break
-		}
-	}
-
 	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
 	assert.Equal(t, "1 1 E", r.ReportLastPosition())
 }
 
 func TestRoverCanRotateLeftFourTimes(t *testing.T) {
 	r, err := mars.NewRover(1, 1, "N", "LLLL")
+	assert.NoError(t, err)
+
+	executeAllRoverCommands(r)
+	assert.Equal(t, "1 1 N", r.ReportLastPosition())
+}
+
+func executeAllRoverCommands(r *mars.Rover) {
 	for {
 		ok := r.ExecuteNextCommand()
 		if !ok {
 			break
 		}
 	}
-
-	assert.NoError(t, err)
-	assert.Equal(t, "1 1 N", r.ReportLastPosition())
 }
