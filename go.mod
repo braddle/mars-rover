@@ -1,4 +1,4 @@
-module untitled
+module mars_rover
 
 go 1.26.0
 

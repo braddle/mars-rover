@@ -1,8 +1,8 @@
 package mars_test
 
 import (
+	"mars_rover/mars"
 	"testing"
-	"untitled/mars"
 
 	"github.com/stretchr/testify/assert"
 )
